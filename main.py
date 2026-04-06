@@ -87,3 +87,32 @@ def cadastrar_album():
         except Exception as erro:
             session.rollback()
             print(f"Ocorreu um erro {erro}")
+
+
+def listar_artistas():
+    with Session() as session:
+        try:
+            artistas = session.query(Artista).all()
+            print()
+            for artista in artistas:
+                print(f"Nome: {artista.nome} | Nome Artístico: {artista.nome_artistico}")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro {erro}")
+
+
+def listar_album():
+    with Session() as session:
+        try:
+
+            albuns = session.query(Album).all()
+            print()
+            for album in albuns:
+                print(f"Nome: {album.nome} | Artista: {album.nome_artistico}")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro {erro}")
+
+listar_album()
