@@ -193,3 +193,46 @@ def atualiazar_album():
             session.rollback()
             print(f"Ocorreu um erro {erro}")
 
+def deletar_artista():
+    nome = input("Digite o nome do artista: ").strip().capitalize()
+
+    with Session() as session:
+        try:
+            artista = session.query(Artista).filter_by(nome=nome).first()
+
+            if not artista:
+                print("Artista não encontrado.")
+                return
+
+            if artista.albuns:
+                print("Não é possível deletar o artista. Ele possui álbuns cadastrados.")
+                return
+
+            session.delete(artista)
+            session.commit()
+
+            print("Artista deletado com sucesso!")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro: {erro}")
+
+def deletar_album():
+    nome = input("Digite o nome do álbum: ").strip().capitalize()
+
+    with Session() as session:
+        try:
+            album = session.query(Album).filter_by(nome_album=nome).first()
+
+            if not album:
+                print("Álbum não encontrado.")
+                return
+
+            session.delete(album)
+            session.commit()
+
+            print("Álbum deletado com sucesso!")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro: {erro}")
