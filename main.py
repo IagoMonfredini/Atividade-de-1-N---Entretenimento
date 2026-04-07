@@ -141,3 +141,55 @@ def listar_artistas_com_albuns():
             session.rollback()
             print(f"Ocorreu um erro: {erro}")
 
+def atualiazar_artista():
+    nome = input("Digite o nome do artista: ").strip().capitalize()
+
+    with Session() as session:
+        try:
+            artista = session.query(Artista).filter_by(nome=nome).first()
+
+            if not artista:
+                print("Artista não encontrado.")
+                return
+
+            novo_artistico = input("Digite o novo nome artistico: ").strip().capitalize()
+            novo_idade = int(input("Digite a nova idade do artista: "))
+            novo_nacionalidade = input("Digite a nova nacionalidade do artista: ").strip().capitalize()
+
+            artista.nome_artistico = novo_artistico
+            artista.idade = novo_idade
+            artista.nacionalidade = novo_nacionalidade
+
+            session.commit()
+            print("Artista atualizado com sucesso!")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro {erro}")
+
+def atualiazar_album():
+    nome = input("Digite o nome do album: ").strip().capitalize()
+
+    with Session() as session:
+        try:
+            album = session.query(Album).filter_by(nome_album=nome).first()
+
+            if not album:
+                print("Álbum não encontrado.")
+                return
+
+            novo_qtd_musica = int(input("Digite a nova quantidade de músicas: "))
+            novo_lancamento = int(input("Digite a nova data de lançamento: "))
+            novo_faixa = input("Digite a nova faixa principal: ").strip().capitalize()
+
+            album.quantidade_musicas = novo_qtd_musica
+            album.lancamento = novo_lancamento
+            album.faixa_principal = novo_faixa
+
+            session.commit()
+            print("Álbum atualizado com sucesso!")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro {erro}")
+
